@@ -5,7 +5,7 @@ const { MongoClient } = require('mongodb');
 const cors = require('cors')
 const admin = require("firebase-admin");
 require('dotenv').config();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 6000;
 
 
 // const serviceAccount = JSON.parse(FIREBASE_SERVICE_ACCOUNT);
@@ -23,7 +23,6 @@ app.use(express.json())
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.0shwc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-console.log(uri)
 
 async function verifyToken(req, res, next) {
     if (req.headers?.authorization?.startsWith('Bearer ')) {
@@ -80,7 +79,6 @@ async function run() {
             const filter = { _id: ObjectId(order) }
             const result = await ordersCollection.deleteOne(filter)
             res.json(result)
-            console.log(order)
         })
 
         // specific user's orders
@@ -89,7 +87,6 @@ async function run() {
             const filter = { email: email }
             const result = await ordersCollection.find(filter).toArray()
             res.json(result)
-            console.log(result)
         })
 
         // store review 
@@ -104,6 +101,7 @@ async function run() {
             const result = await reviewsCollection.find({}).toArray()
             res.json(result)
         });
+        
         app.get('/users/:email', async (req, res) => {
             const email = req.params.email;
             const query = { email: email };
