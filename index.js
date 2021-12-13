@@ -101,7 +101,7 @@ async function run() {
             const result = await reviewsCollection.find({}).toArray()
             res.json(result)
         });
-        
+
         app.get('/users/:email', async (req, res) => {
             const email = req.params.email;
             const query = { email: email };
@@ -154,7 +154,7 @@ async function run() {
 run().catch(console.dir)
 
 app.get('/', (req, res) => {
-    res.send('Hello car fair')
+    res.send('Hello car fair hi hello')
 })
 
 app.listen(port, () => {
